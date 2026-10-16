@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValenAnime // Nonton Anime</title>
+<style>
+  :root {
+    --panel: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --accent: #d97706;
+    --shadow: rgba(0, 0, 0, 0.15);
+    --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #1a1228;
+  }
+
+  /* ============ BACKGROUND GAMBAR ============ */
+  .bg-image {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url('assets/bg.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    /* Sedikit blur biar gambar resolusi rendah nggak keliatan pecah */
+    filter: blur(1px) brightness(0.85) saturate(1.1);
+    transform: scale(1.05); /* hindari tepi blur */
+  }
+
+  /* Overlay gelap biar teks kebaca */
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(10, 5, 20, 0.55) 0%,
+      rgba(10, 5, 20, 0.35) 40%,
+      rgba(10, 5, 20, 0.7) 100%);
+    pointer-events: none;
+  }
+
+  /* Kelopak sakura jatuh */
+  .petals {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle at 30% 30%, #ffd1e0, #ff8fb8);
+    border-radius: 50% 0 50% 0;
+    opacity: 0.7;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% {
+      transform: translateY(-10vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% {
+      transform: translateY(110vh) translateX(80px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* ============ LAYOUT ============ */
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+  }
+
+  /* HEADER */
+  header.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    border-radius: 14px;
+    background: rgba(20, 15, 35, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 200, 220, 0.2);
+    margin-bottom: 30px;
+    font-size: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+  .brand {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand svg {
+    width: 22px;
+    height: 22px;
+    stroke: #ffb8d0;
+    stroke-width: 1.8;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 6px rgba(255, 184, 208, 0.6));
+  }
+  .nav-links { display: flex; gap: 18px; font-size: 13px; }
+  .nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active {
+    color: #ffb8d0;
+    font-weight: 700;
+    border-bottom: 2px solid #ffb8d0;
+    padding-bottom: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 40px 32px;
+    border-radius: 18px;
+    background: rgba(20, 15, 35, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 200, 220, 0.2);
+    margin-bottom: 28px;
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.15;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  }
+  .hero h1 .accent {
+    background: linear-gradient(90deg, #ffb8d0, #ff8fb8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+  }
+
+  /* SEARCH */
+  .search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 8px;
+    background: rgba(20, 15, 35, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 200, 220, 0.2);
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  .search-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  .search-bar input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 184, 208, 0.6);
+  }
+  .search-bar input::placeholder { color: #999; }
+  .search-bar button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff8fb8, #d94a7a);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(217, 74, 122, 0.4);
+  }
+  .search-bar button svg {
+    width: 16px;
+    height: 16px;
+    stroke: #fff;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .search-bar button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217, 74, 122, 0.6);
+  }
+
+  /* STATUS */
+  .status-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    padding: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+  .status-msg svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .status-msg.error { color: #ffb4b4; }
+  .status-msg.error svg {
+    stroke: #ffb4b4;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* GRID ANIME */
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+
+  a.anime-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px var(--shadow);
+  }
+  a.anime-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4);
+  }
+  a.anime-card .poster {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    background: #e8e3dc;
+    display: block;
+  }
+  a.anime-card .info {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  a.anime-card .title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  a.anime-card .meta {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  a.anime-card .meta .score {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  a.anime-card .meta .score svg {
+    width: 11px;
+    height: 11px;
+    fill: var(--accent);
+    stroke: none;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    border-top: 1px solid rgba(255, 200, 220, 0.25);
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+  footer.bottom .accent { color: #ffb8d0; }
+
+  @media (max-width: 500px) {
+    .anime-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+    .hero { padding: 30px 22px; }
+    .search-bar button { padding: 12px 14px; font-size: 13px; }
+    .search-bar button span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND GAMBAR -->
+<div class="bg-image" aria-hidden="true"></div>
+<div class="bg-overlay" aria-hidden="true"></div>
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<!-- KONTEN -->
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <a href="/">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 21V9l9-6 9 6v12"/>
+          <path d="M9 21v-6h6v6"/>
+          <circle cx="12" cy="10" r="1"/>
+        </svg>
+        <span>ValenAnime</span>
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="/" class="active">HOME</a>
+      <a href="/ongoing.html">ONGOING</a>
+      <a href="/login.html">LOGIN</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Nonton <span class="accent">Anime</span> dengan Nyaman</h1>
+    <p>Koleksi anime terbaru & terpopuler. Data dari MyAnimeList.</p>
+  </section>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Cari judul anime..." />
+    <button onclick="searchAnime()">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <span>Cari</span>
+    </button>
+  </div>
+
+  <div class="status-msg" id="statusMsg">Memuat data anime...</div>
+
+  <div class="anime-grid" id="animeGrid"></div>
+
+  <footer class="bottom">
+    <div>© 2026 <span class="accent">valenanime.my.id</span> — all rights reserved</div>
+    <div class="accent">// Powered by Jikan API</div>
+  </footer>
+
+</div>
+
+<script>
+  // ============ KELOPAK SAKURA JATUH ============
+  function generatePetals() {
+    const container = document.getElementById('petals');
+    if (!container) return;
+    container.innerHTML = '';
+    const total = 15;
+    for (let i = 0; i < total; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = (8 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 8) + 's';
+      const size = 6 + Math.random() * 8;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      container.appendChild(p);
+    }
+  }
+  generatePetals();
+
+  // ============ ANIME DATA ============
+  const grid = document.getElementById('animeGrid');
+  const statusMsg = document.getElementById('statusMsg');
+  const searchInput = document.getElementById('searchInput');
+
+  const SVG_WARN = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+  const SVG_STAR = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+
+  function setStatus(html, isError = false) {
+    statusMsg.innerHTML = html;
+    statusMsg.className = 'status-msg' + (isError ? ' error' : '');
+  }
+
+  async function loadTopAnime() {
+    grid.innerHTML = '';
+    setStatus('Memuat data anime...');
+
+    try {
+      const res = await fetch('https://api.jikan.moe/v4/top/anime?limit=24');
+      if (!res.ok) throw new Error('Gagal fetch');
+      const data = await res.json();
+      renderAnime(data.data);
+      setStatus('Top 24 anime terpopuler');
+    } catch (err) {
+      setStatus(SVG_WARN + '<span>Gagal memuat data. Coba refresh.</span>', true);
+      console.error(err);
+    }
+  }
+
+  async function searchAnime() {
+    const q = searchInput.value.trim();
+    if (!q) { loadTopAnime(); return; }
+
+    grid.innerHTML = '';
+    setStatus(`Mencari "${q}"...`);
+
+    try {
+      const res = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(q)}&limit=24`);
+      if (!res.ok) throw new Error('Gagal fetch');
+      const data = await res.json();
+      if (data.data.length === 0) {
+        setStatus(`Nggak ada hasil untuk "${q}"`);
+        return;
+      }
+      renderAnime(data.data);
+      setStatus(`Hasil pencarian: "${q}" (${data.data.length} anime)`);
+    } catch (err) {
+      setStatus(SVG_WARN + '<span>Gagal mencari. Coba lagi.</span>', true);
+      console.error(err);
+    }
+  }
+
+  function renderAnime(list) {
+    grid.innerHTML = '';
+    list.forEach(anime => {
+      const card = document.createElement('a');
+      card.className = 'anime-card';
+      card.href = `/detail.html?id=${anime.mal_id}`;
+
+      const poster = anime.images?.jpg?.image_url || '';
+      const title = anime.title || 'Tanpa judul';
+      const score = anime.score ? anime.score.toFixed(1) : '?';
+      const year = anime.year || (anime.aired?.prop?.from?.year) || '?';
+      const eps = anime.episodes ? `${anime.episodes} eps` : '?';
+
+      card.innerHTML = `
+        <img class="poster" src="${poster}" alt="${title}" loading="lazy" />
+        <div class="info">
+          <div class="title">${title}</div>
+          <div class="meta">
+            <span>${year} · ${eps}</span>
+            <span class="score">${SVG_STAR}${score}</span>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchAnime();
+  });
+
+  loadTopAnime();
+</script>
+
+</body>
+</html>
