@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Anime // ValenAnime</title>
+<style>
+  :root {
+    --panel: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --accent: #d97706;
+    --pink: #d94a7a;
+    --shadow: rgba(0, 0, 0, 0.15);
+    --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    background: #1a1228;
+    overflow-x: hidden;
+  }
+
+  .bg-image {
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url('assets/bg.jpg');
+    background-size: cover; background-position: center top;
+    filter: blur(3px) brightness(0.5) saturate(1.1);
+    transform: scale(1.1);
+  }
+  .bg-overlay {
+    position: fixed; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(10,5,20,0.6) 0%, rgba(10,5,20,0.85) 100%);
+  }
+
+  .wrap {
+    position: relative; z-index: 2;
+    max-width: 1000px; margin: 0 auto;
+    padding: 24px 20px 80px;
+  }
+
+  header.top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px; border-radius: 14px;
+    background: rgba(20,15,35,0.6);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,200,220,0.2);
+    margin-bottom: 30px; font-size: 14px; flex-wrap: wrap; gap: 10px;
+  }
+  .brand { color: #fff; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .brand svg { width: 22px; height: 22px; stroke: #ffb8d0; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-links { display: flex; gap: 18px; font-size: 13px; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+
+  .detail-card {
+    background: rgba(20,15,35,0.65);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,200,220,0.2);
+    border-radius: 18px; padding: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    color: #fff;
+  }
+
+  .detail-card .poster {
+    width: 100%; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    aspect-ratio: 3/4; object-fit: cover;
+  }
+
+  .detail-card h1 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 800; margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
+  }
+  .meta-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 20px;
+    background: rgba(255,184,208,0.15);
+    border: 1px solid rgba(255,184,208,0.3);
+    font-size: 12px; color: #ffb8d0; font-weight: 600;
+  }
+  .meta-badge svg { width: 12px; height: 12px; fill: #ffb8d0; stroke: none; }
+
+  .synopsis {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px; margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  .genre-list {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+  }
+  .genre-tag {
+    padding: 4px 12px; border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 12px; color: rgba(255,255,255,0.8);
+  }
+
+  .btn-watch {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 12px;
+    background: linear-gradient(135deg, #ff8fb8, #d94a7a);
+    color: #fff; text-decoration: none;
+    font-weight: 700; font-size: 15px;
+    box-shadow: 0 6px 20px rgba(217,74,122,0.4);
+    transition: all 0.25s;
+    border: none; cursor: pointer;
+  }
+  .btn-watch:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(217,74,122,0.6);
+  }
+  .btn-watch svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  .loading, .error {
+    text-align: center; padding: 60px 20px;
+    color: rgba(255,255,255,0.8); font-size: 14px;
+  }
+  .error a { color: #ffb8d0; }
+
+  @media (max-width: 700px) {
+    .detail-card {
+      grid-template-columns: 1fr;
+      padding: 20px;
+      gap: 20px;
+    }
+    .detail-card .poster {
+      max-width: 200px; margin: 0 auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-image" aria-hidden="true"></div>
+<div class="bg-overlay" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <a href="/">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 21V9l9-6 9 6v12"/>
+          <path d="M9 21v-6h6v6"/>
+          <circle cx="12" cy="10" r="1"/>
+        </svg>
+        <span>ValenAnime</span>
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="/">HOME</a>
+      <a href="/ongoing.html">ONGOING</a>
+      <a href="/login.html">LOGIN</a>
+    </nav>
+  </header>
+
+  <div id="detailContent">
+    <div class="loading">Memuat detail anime...</div>
+  </div>
+
+</div>
+
+<script>
+  const animeList = [
+    { id: 1, title: "Solo Leveling", poster: "https://cdn.myanimelist.net/images/anime/1936/139851.jpg", year: 2024, eps: 12, score: 8.7, genre: ["Action", "Adventure", "Fantasy"], synopsis: "Sung Jinwoo, hunter terlemah, mendapatkan kekuatan misterius setelah terjebak di dungeon. Ia bangkit menjadi hunter terkuat.", url: "https://otakudesu.blog/anime/solo-leveling/" },
+    { id: 2, title: "Jujutsu Kaisen", poster: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", year: 2020, eps: 24, score: 8.6, genre: ["Action", "Supernatural"], synopsis: "Yuji Itadori menelan jari terkutuk dan menjadi wadah Sukuna, raja kutukan. Ia bergabung dengan Jujutsu High untuk melawan kutukan.", url: "https://otakudesu.blog/anime/jujutsu-kaisen/" },
+    { id: 3, title: "Demon Slayer", poster: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", year: 2019, eps: 26, score: 8.7, genre: ["Action", "Historical", "Supernatural"], synopsis: "Tanjiro Kamado menjadi pemburu iblis setelah keluarganya dibantai dan adiknya berubah menjadi iblis.", url: "https://otakudesu.blog/anime/kimetsu-no-yaiba/" },
+    { id: 4, title: "Attack on Titan", poster: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", year: 2013, eps: 25, score: 8.5, genre: ["Action", "Drama"], synopsis: "Eren Yeager bersumpah membalas dendam setelah Titan menghancurkan kampung halamannya. Ia bergabung dengan Survey Corps.", url: "https://otakudesu.blog/anime/shingeki-no-kyojin/" },
+    { id: 5, title: "One Piece", poster: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", year: 1999, eps: 1000, score: 8.7, genre: ["Action", "Adventure", "Comedy"], synopsis: "Monkey D. Luffy mencari harta karun One Piece untuk menjadi Raja Bajak Laut.", url: "https://otakudesu.blog/anime/one-piece/" },
+    { id: 6, title: "Chainsaw Man", poster: "https://cdn.myanimelist.net/images/anime/1806/126216.jpg", year: 2022, eps: 12, score: 8.5, genre: ["Action", "Horror", "Supernatural"], synopsis: "Denji menjadi Chainsaw Man setelah digabung dengan iblis gergaji. Ia memburu iblis untuk membayar utang.", url: "https://otakudesu.blog/anime/chainsaw-man/" },
+    { id: 7, title: "Spy x Family", poster: "https://cdn.myanimelist.net/images/anime/1441/122795.jpg", year: 2022, eps: 25, score: 8.5, genre: ["Action", "Comedy", "Slice of Life"], synopsis: "Seorang mata-mata, assassin, dan anak telepati berpura-pura menjadi keluarga untuk menjalankan misi.", url: "https://otakudesu.blog/anime/spy-x-family/" },
+    { id: 8, title: "My Hero Academia", poster: "https://cdn.myanimelist.net/images/anime/10/78745.jpg", year: 2016, eps: 13, score: 8.0, genre: ["Action", "School"], synopsis: "Izuku Midoriya, anak tanpa quirk, mewarisi kekuatan All Might dan bercita-cita menjadi pahlawan.", url: "https://otakudesu.blog/anime/boku-no-hero-academia/" },
+    { id: 9, title: "Fullmetal Alchemist: Brotherhood", poster: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg", year: 2009, eps: 64, score: 9.1, genre: ["Action", "Adventure", "Drama"], synopsis: "Dua bersaudara alchemist mencari Philosopher's Stone untuk mengembalikan tubuh mereka.", url: "https://otakudesu.blog/anime/fullmetal-alchemist-brotherhood/" },
+    { id: 10, title: "Steins;Gate", poster: "https://cdn.myanimelist.net/images/anime/1935/127974.jpg", year: 2011, eps: 24, score: 9.0, genre: ["Sci-Fi", "Thriller"], synopsis: "Okabe Rintaro menemukan cara mengirim pesan ke masa lalu, memicu konspirasi berbahaya.", url: "https://otakudesu.blog/anime/steins-gate/" },
+    { id: 11, title: "Death Note", poster: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", year: 2006, eps: 37, score: 8.6, genre: ["Mystery", "Psychological", "Thriller"], synopsis: "Light Yagami menemukan Death Note yang bisa membunuh siapa pun yang namanya tertulis.", url: "https://otakudesu.blog/anime/death-note/" },
+    { id: 12, title: "Tokyo Revengers", poster: "https://cdn.myanimelist.net/images/anime/1839/112302.jpg", year: 2021, eps: 24, score: 7.9, genre: ["Action", "Drama", "Time Travel"], synopsis: "Takemichi kembali ke masa SMA untuk menyelamatkan mantan pacarnya dari geng Tokyo Manji.", url: "https://otakudesu.blog/anime/tokyo-revengers/" },
+    { id: 13, title: "Blue Lock", poster: "https://cdn.myanimelist.net/images/anime/1253/125680.jpg", year: 2022, eps: 24, score: 8.2, genre: ["Sports"], synopsis: "300 striker muda bersaing di Blue Lock untuk menjadi penyerang terbaik Jepang.", url: "https://otakudesu.blog/anime/blue-lock/" },
+    { id: 14, title: "Oshi no Ko", poster: "https://cdn.myanimelist.net/images/anime/1812/134736.jpg", year: 2023, eps: 11, score: 8.6, genre: ["Drama", "Supernatural"], synopsis: "Dokter dan pasiennya terlahir kembali sebagai anak kembar dari idol terkenal.", url: "https://otakudesu.blog/anime/oshi-no-ko/" },
+    { id: 15, title: "Frieren: Beyond Journey's End", poster: "https://cdn.myanimelist.net/images/anime/1015/138006.jpg", year: 2023, eps: 28, score: 9.3, genre: ["Adventure", "Drama", "Fantasy"], synopsis: "Elf penyihir Frieren merenungkan arti hidup setelah kematian teman-temannya.", url: "https://otakudesu.blog/anime/sousou-no-frieren/" },
+    { id: 16, title: "Vinland Saga", poster: "https://cdn.myanimelist.net/images/anime/1500/103005.jpg", year: 2019, eps: 24, score: 8.7, genre: ["Action", "Adventure", "Drama"], synopsis: "Thorfinn balas dendam atas kematian ayahnya di era Viking.", url: "https://otakudesu.blog/anime/vinland-saga/" },
+    { id: 17, title: "Mushoku Tensei", poster: "https://cdn.myanimelist.net/images/anime/1530/117776.jpg", year: 2021, eps: 23, score: 8.4, genre: ["Adventure", "Fantasy", "Isekai"], synopsis: "Pria gagal terlahir kembali di dunia sihir dan bertekad hidup tanpa penyesalan.", url: "https://otakudesu.blog/anime/mushoku-tensei/" },
+    { id: 18, title: "Re:Zero", poster: "https://cdn.myanimelist.net/images/anime/1522/128039.jpg", year: 2016, eps: 25, score: 8.3, genre: ["Drama", "Fantasy", "Isekai"], synopsis: "Subaru dipindahkan ke dunia lain dan mendapat kemampuan mengulang waktu saat mati.", url: "https://otakudesu.blog/anime/rezero-kara-hajimeru-isekai-seikatsu/" }
+  ];
+
+  const SVG_STAR = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+  const SVG_PLAY = '<svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>';
+
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  function renderDetail() {
+    const container = document.getElementById('detailContent');
+    const id = parseInt(getParam('id'));
+
+    if (!id) {
+      container.innerHTML = '<div class="error">Anime nggak ditemukan. <a href="/">Balik ke home</a></div>';
+      return;
+    }
+
+    const anime = animeList.find(a => a.id === id);
+    if (!anime) {
+      container.innerHTML = '<div class="error">Anime nggak ditemukan. <a href="/">Balik ke home</a></div>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="detail-card">
+        <img class="poster" src="${anime.poster}" alt="${anime.title}" />
+        <div>
+          <h1>${anime.title}</h1>
+          <div class="meta-row">
+            <span class="meta-badge">${SVG_STAR}${anime.score}</span>
+            <span class="meta-badge">${anime.year}</span>
+            <span class="meta-badge">${anime.eps} Episode</span>
+          </div>
+          <div class="genre-list">
+            ${anime.genre.map(g => `<span class="genre-tag">${g}</span>`).join('')}
+          </div>
+          <p class="synopsis">${anime.synopsis}</p>
+          <a class="btn-watch" href="${anime.url}" target="_blank" rel="noopener">
+            ${SVG_PLAY}
+            <span>Tonton Sekarang</span>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  renderDetail();
+</script>
+
+</body>
+</html>
