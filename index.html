@@ -26,7 +26,7 @@
     background: #1a1228;
   }
 
-  /* ============ BACKGROUND GAMBAR ============ */
+  /* BACKGROUND GAMBAR */
   .bg-image {
     position: fixed;
     inset: 0;
@@ -35,12 +35,10 @@
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    /* Sedikit blur biar gambar resolusi rendah nggak keliatan pecah */
     filter: blur(1px) brightness(0.85) saturate(1.1);
-    transform: scale(1.05); /* hindari tepi blur */
+    transform: scale(1.05);
   }
 
-  /* Overlay gelap biar teks kebaca */
   .bg-overlay {
     position: fixed;
     inset: 0;
@@ -52,7 +50,7 @@
     pointer-events: none;
   }
 
-  /* Kelopak sakura jatuh */
+  /* KELOPAK SAKURA */
   .petals {
     position: fixed;
     inset: 0;
@@ -70,19 +68,13 @@
     animation: fall linear infinite;
   }
   @keyframes fall {
-    0% {
-      transform: translateY(-10vh) translateX(0) rotate(0deg);
-      opacity: 0;
-    }
+    0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
     10% { opacity: 0.8; }
     90% { opacity: 0.8; }
-    100% {
-      transform: translateY(110vh) translateX(80px) rotate(720deg);
-      opacity: 0;
-    }
+    100% { transform: translateY(110vh) translateX(80px) rotate(720deg); opacity: 0; }
   }
 
-  /* ============ LAYOUT ============ */
+  /* LAYOUT */
   .wrap {
     position: relative;
     z-index: 2;
@@ -91,7 +83,6 @@
     padding: 24px 20px 80px;
   }
 
-  /* HEADER */
   header.top {
     display: flex;
     justify-content: space-between;
@@ -111,7 +102,6 @@
   .brand {
     color: #fff;
     font-weight: 700;
-    letter-spacing: 0.3px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -148,7 +138,6 @@
     padding-bottom: 2px;
   }
 
-  /* HERO */
   .hero {
     padding: 40px 32px;
     border-radius: 18px;
@@ -173,12 +162,8 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .hero p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-  }
+  .hero p { color: rgba(255, 255, 255, 0.9); font-size: 14px; }
 
-  /* SEARCH */
   .search-bar {
     display: flex;
     gap: 10px;
@@ -201,7 +186,6 @@
     font-family: var(--font);
     font-size: 14px;
     outline: none;
-    transition: box-shadow 0.2s;
   }
   .search-bar input:focus {
     box-shadow: 0 0 0 3px rgba(255, 184, 208, 0.6);
@@ -237,7 +221,6 @@
     box-shadow: 0 6px 20px rgba(217, 74, 122, 0.6);
   }
 
-  /* STATUS */
   .status-msg {
     display: flex;
     justify-content: center;
@@ -250,21 +233,7 @@
     margin-bottom: 20px;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
   }
-  .status-msg svg {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-  .status-msg.error { color: #ffb4b4; }
-  .status-msg.error svg {
-    stroke: #ffb4b4;
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
 
-  /* GRID ANIME */
   .anime-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -331,7 +300,6 @@
     stroke: none;
   }
 
-  /* FOOTER */
   footer.bottom {
     border-top: 1px solid rgba(255, 200, 220, 0.25);
     padding-top: 22px;
@@ -355,12 +323,10 @@
 </head>
 <body>
 
-<!-- BACKGROUND GAMBAR -->
 <div class="bg-image" aria-hidden="true"></div>
 <div class="bg-overlay" aria-hidden="true"></div>
 <div class="petals" id="petals" aria-hidden="true"></div>
 
-<!-- KONTEN -->
 <div class="wrap">
 
   <header class="top">
@@ -383,7 +349,7 @@
 
   <section class="hero">
     <h1>Nonton <span class="accent">Anime</span> dengan Nyaman</h1>
-    <p>Koleksi anime terbaru & terpopuler. Data dari MyAnimeList.</p>
+    <p>Koleksi anime terbaru & terpopuler.</p>
   </section>
 
   <div class="search-bar">
@@ -397,19 +363,19 @@
     </button>
   </div>
 
-  <div class="status-msg" id="statusMsg">Memuat data anime...</div>
+  <div class="status-msg" id="statusMsg">Memuat...</div>
 
   <div class="anime-grid" id="animeGrid"></div>
 
   <footer class="bottom">
     <div>© 2026 <span class="accent">valenanime.my.id</span> — all rights reserved</div>
-    <div class="accent">// Powered by Jikan API</div>
+    <div class="accent">// Enjoy your anime</div>
   </footer>
 
 </div>
 
 <script>
-  // ============ KELOPAK SAKURA JATUH ============
+  // ============ KELOPAK SAKURA ============
   function generatePetals() {
     const container = document.getElementById('petals');
     if (!container) return;
@@ -429,78 +395,53 @@
   }
   generatePetals();
 
-  // ============ ANIME DATA ============
+  // ============ DATA ANIME (MANUAL) ============
+  const animeList = [
+    { title: "Solo Leveling", poster: "https://cdn.myanimelist.net/images/anime/1936/139851.jpg", year: 2024, eps: 12, score: 8.7, url: "https://otakudesu.blog/anime/solo-leveling/" },
+    { title: "Jujutsu Kaisen", poster: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", year: 2020, eps: 24, score: 8.6, url: "https://otakudesu.blog/anime/jujutsu-kaisen/" },
+    { title: "Demon Slayer", poster: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", year: 2019, eps: 26, score: 8.7, url: "https://otakudesu.blog/anime/kimetsu-no-yaiba/" },
+    { title: "Attack on Titan", poster: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", year: 2013, eps: 25, score: 8.5, url: "https://otakudesu.blog/anime/shingeki-no-kyojin/" },
+    { title: "One Piece", poster: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", year: 1999, eps: 1000, score: 8.7, url: "https://otakudesu.blog/anime/one-piece/" },
+    { title: "Chainsaw Man", poster: "https://cdn.myanimelist.net/images/anime/1806/126216.jpg", year: 2022, eps: 12, score: 8.5, url: "https://otakudesu.blog/anime/chainsaw-man/" },
+    { title: "Spy x Family", poster: "https://cdn.myanimelist.net/images/anime/1441/122795.jpg", year: 2022, eps: 25, score: 8.5, url: "https://otakudesu.blog/anime/spy-x-family/" },
+    { title: "My Hero Academia", poster: "https://cdn.myanimelist.net/images/anime/10/78745.jpg", year: 2016, eps: 13, score: 8.0, url: "https://otakudesu.blog/anime/boku-no-hero-academia/" },
+    { title: "Fullmetal Alchemist: Brotherhood", poster: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg", year: 2009, eps: 64, score: 9.1, url: "https://otakudesu.blog/anime/fullmetal-alchemist-brotherhood/" },
+    { title: "Steins;Gate", poster: "https://cdn.myanimelist.net/images/anime/1935/127974.jpg", year: 2011, eps: 24, score: 9.0, url: "https://otakudesu.blog/anime/steins-gate/" },
+    { title: "Death Note", poster: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", year: 2006, eps: 37, score: 8.6, url: "https://otakudesu.blog/anime/death-note/" },
+    { title: "Tokyo Revengers", poster: "https://cdn.myanimelist.net/images/anime/1839/112302.jpg", year: 2021, eps: 24, score: 7.9, url: "https://otakudesu.blog/anime/tokyo-revengers/" },
+    { title: "Blue Lock", poster: "https://cdn.myanimelist.net/images/anime/1253/125680.jpg", year: 2022, eps: 24, score: 8.2, url: "https://otakudesu.blog/anime/blue-lock/" },
+    { title: "Oshi no Ko", poster: "https://cdn.myanimelist.net/images/anime/1812/134736.jpg", year: 2023, eps: 11, score: 8.6, url: "https://otakudesu.blog/anime/oshi-no-ko/" },
+    { title: "Frieren: Beyond Journey's End", poster: "https://cdn.myanimelist.net/images/anime/1015/138006.jpg", year: 2023, eps: 28, score: 9.3, url: "https://otakudesu.blog/anime/sousou-no-frieren/" },
+    { title: "Vinland Saga", poster: "https://cdn.myanimelist.net/images/anime/1500/103005.jpg", year: 2019, eps: 24, score: 8.7, url: "https://otakudesu.blog/anime/vinland-saga/" },
+    { title: "Mushoku Tensei", poster: "https://cdn.myanimelist.net/images/anime/1530/117776.jpg", year: 2021, eps: 23, score: 8.4, url: "https://otakudesu.blog/anime/mushoku-tensei/" },
+    { title: "Re:Zero", poster: "https://cdn.myanimelist.net/images/anime/1522/128039.jpg", year: 2016, eps: 25, score: 8.3, url: "https://otakudesu.blog/anime/rezero-kara-hajimeru-isekai-seikatsu/" }
+  ];
+
+  // ============ RENDER ============
   const grid = document.getElementById('animeGrid');
   const statusMsg = document.getElementById('statusMsg');
   const searchInput = document.getElementById('searchInput');
 
-  const SVG_WARN = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
   const SVG_STAR = '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-
-  function setStatus(html, isError = false) {
-    statusMsg.innerHTML = html;
-    statusMsg.className = 'status-msg' + (isError ? ' error' : '');
-  }
-
-  async function loadTopAnime() {
-    grid.innerHTML = '';
-    setStatus('Memuat data anime...');
-
-    try {
-      const res = await fetch('https://api.jikan.moe/v4/top/anime?limit=24');
-      if (!res.ok) throw new Error('Gagal fetch');
-      const data = await res.json();
-      renderAnime(data.data);
-      setStatus('Top 24 anime terpopuler');
-    } catch (err) {
-      setStatus(SVG_WARN + '<span>Gagal memuat data. Coba refresh.</span>', true);
-      console.error(err);
-    }
-  }
-
-  async function searchAnime() {
-    const q = searchInput.value.trim();
-    if (!q) { loadTopAnime(); return; }
-
-    grid.innerHTML = '';
-    setStatus(`Mencari "${q}"...`);
-
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(q)}&limit=24`);
-      if (!res.ok) throw new Error('Gagal fetch');
-      const data = await res.json();
-      if (data.data.length === 0) {
-        setStatus(`Nggak ada hasil untuk "${q}"`);
-        return;
-      }
-      renderAnime(data.data);
-      setStatus(`Hasil pencarian: "${q}" (${data.data.length} anime)`);
-    } catch (err) {
-      setStatus(SVG_WARN + '<span>Gagal mencari. Coba lagi.</span>', true);
-      console.error(err);
-    }
-  }
 
   function renderAnime(list) {
     grid.innerHTML = '';
+    if (list.length === 0) {
+      statusMsg.textContent = 'Anime nggak ketemu.';
+      return;
+    }
     list.forEach(anime => {
       const card = document.createElement('a');
       card.className = 'anime-card';
-      card.href = `/detail.html?id=${anime.mal_id}`;
-
-      const poster = anime.images?.jpg?.image_url || '';
-      const title = anime.title || 'Tanpa judul';
-      const score = anime.score ? anime.score.toFixed(1) : '?';
-      const year = anime.year || (anime.aired?.prop?.from?.year) || '?';
-      const eps = anime.episodes ? `${anime.episodes} eps` : '?';
-
+      card.href = anime.url || '#';
+      card.target = '_blank';
       card.innerHTML = `
-        <img class="poster" src="${poster}" alt="${title}" loading="lazy" />
+        <img class="poster" src="${anime.poster}" alt="${anime.title}" loading="lazy" />
         <div class="info">
-          <div class="title">${title}</div>
+          <div class="title">${anime.title}</div>
           <div class="meta">
-            <span>${year} · ${eps}</span>
-            <span class="score">${SVG_STAR}${score}</span>
+            <span>${anime.year} · ${anime.eps} eps</span>
+            <span class="score">${SVG_STAR}${anime.score}</span>
           </div>
         </div>
       `;
@@ -508,11 +449,24 @@
     });
   }
 
+  function searchAnime() {
+    const q = searchInput.value.trim().toLowerCase();
+    if (!q) {
+      renderAnime(animeList);
+      statusMsg.textContent = `Total ${animeList.length} anime tersedia`;
+      return;
+    }
+    const filtered = animeList.filter(a => a.title.toLowerCase().includes(q));
+    renderAnime(filtered);
+    statusMsg.textContent = `Hasil pencarian "${q}": ${filtered.length} anime`;
+  }
+
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') searchAnime();
   });
 
-  loadTopAnime();
+  renderAnime(animeList);
+  statusMsg.textContent = `Total ${animeList.length} anime tersedia`;
 </script>
 
 </body>
