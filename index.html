@@ -397,24 +397,24 @@
 
   // ============ DATA ANIME (MANUAL) ============
   const animeList = [
-    { title: "Solo Leveling", poster: "https://cdn.myanimelist.net/images/anime/1936/139851.jpg", year: 2024, eps: 12, score: 8.7, url: "https://otakudesu.blog/anime/solo-leveling/" },
-    { title: "Jujutsu Kaisen", poster: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", year: 2020, eps: 24, score: 8.6, url: "https://otakudesu.blog/anime/jujutsu-kaisen/" },
-    { title: "Demon Slayer", poster: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", year: 2019, eps: 26, score: 8.7, url: "https://otakudesu.blog/anime/kimetsu-no-yaiba/" },
-    { title: "Attack on Titan", poster: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", year: 2013, eps: 25, score: 8.5, url: "https://otakudesu.blog/anime/shingeki-no-kyojin/" },
-    { title: "One Piece", poster: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", year: 1999, eps: 1000, score: 8.7, url: "https://otakudesu.blog/anime/one-piece/" },
-    { title: "Chainsaw Man", poster: "https://cdn.myanimelist.net/images/anime/1806/126216.jpg", year: 2022, eps: 12, score: 8.5, url: "https://otakudesu.blog/anime/chainsaw-man/" },
-    { title: "Spy x Family", poster: "https://cdn.myanimelist.net/images/anime/1441/122795.jpg", year: 2022, eps: 25, score: 8.5, url: "https://otakudesu.blog/anime/spy-x-family/" },
-    { title: "My Hero Academia", poster: "https://cdn.myanimelist.net/images/anime/10/78745.jpg", year: 2016, eps: 13, score: 8.0, url: "https://otakudesu.blog/anime/boku-no-hero-academia/" },
-    { title: "Fullmetal Alchemist: Brotherhood", poster: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg", year: 2009, eps: 64, score: 9.1, url: "https://otakudesu.blog/anime/fullmetal-alchemist-brotherhood/" },
-    { title: "Steins;Gate", poster: "https://cdn.myanimelist.net/images/anime/1935/127974.jpg", year: 2011, eps: 24, score: 9.0, url: "https://otakudesu.blog/anime/steins-gate/" },
-    { title: "Death Note", poster: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", year: 2006, eps: 37, score: 8.6, url: "https://otakudesu.blog/anime/death-note/" },
-    { title: "Tokyo Revengers", poster: "https://cdn.myanimelist.net/images/anime/1839/112302.jpg", year: 2021, eps: 24, score: 7.9, url: "https://otakudesu.blog/anime/tokyo-revengers/" },
-    { title: "Blue Lock", poster: "https://cdn.myanimelist.net/images/anime/1253/125680.jpg", year: 2022, eps: 24, score: 8.2, url: "https://otakudesu.blog/anime/blue-lock/" },
-    { title: "Oshi no Ko", poster: "https://cdn.myanimelist.net/images/anime/1812/134736.jpg", year: 2023, eps: 11, score: 8.6, url: "https://otakudesu.blog/anime/oshi-no-ko/" },
-    { title: "Frieren: Beyond Journey's End", poster: "https://cdn.myanimelist.net/images/anime/1015/138006.jpg", year: 2023, eps: 28, score: 9.3, url: "https://otakudesu.blog/anime/sousou-no-frieren/" },
-    { title: "Vinland Saga", poster: "https://cdn.myanimelist.net/images/anime/1500/103005.jpg", year: 2019, eps: 24, score: 8.7, url: "https://otakudesu.blog/anime/vinland-saga/" },
-    { title: "Mushoku Tensei", poster: "https://cdn.myanimelist.net/images/anime/1530/117776.jpg", year: 2021, eps: 23, score: 8.4, url: "https://otakudesu.blog/anime/mushoku-tensei/" },
-    { title: "Re:Zero", poster: "https://cdn.myanimelist.net/images/anime/1522/128039.jpg", year: 2016, eps: 25, score: 8.3, url: "https://otakudesu.blog/anime/rezero-kara-hajimeru-isekai-seikatsu/" }
+    { id: 1, title: "Solo Leveling", poster: "https://cdn.myanimelist.net/images/anime/1936/139851.jpg", year: 2024, eps: 12, score: 8.7, genre: ["Action", "Adventure", "Fantasy"], synopsis: "Sung Jinwoo, hunter terlemah, mendapatkan kekuatan misterius setelah terjebak di dungeon. Ia bangkit menjadi hunter terkuat.", url: "https://otakudesu.blog/anime/solo-leveling/" },
+    { id: 2, title: "Jujutsu Kaisen", poster: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg", year: 2020, eps: 24, score: 8.6, genre: ["Action", "Supernatural"], synopsis: "Yuji Itadori menelan jari terkutuk dan menjadi wadah Sukuna, raja kutukan. Ia bergabung dengan Jujutsu High untuk melawan kutukan.", url: "https://otakudesu.blog/anime/jujutsu-kaisen/" },
+    { id: 3, title: "Demon Slayer", poster: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg", year: 2019, eps: 26, score: 8.7, genre: ["Action", "Historical", "Supernatural"], synopsis: "Tanjiro Kamado menjadi pemburu iblis setelah keluarganya dibantai dan adiknya berubah menjadi iblis.", url: "https://otakudesu.blog/anime/kimetsu-no-yaiba/" },
+    { id: 4, title: "Attack on Titan", poster: "https://cdn.myanimelist.net/images/anime/10/47347.jpg", year: 2013, eps: 25, score: 8.5, genre: ["Action", "Drama"], synopsis: "Eren Yeager bersumpah membalas dendam setelah Titan menghancurkan kampung halamannya. Ia bergabung dengan Survey Corps.", url: "https://otakudesu.blog/anime/shingeki-no-kyojin/" },
+    { id: 5, title: "One Piece", poster: "https://cdn.myanimelist.net/images/anime/6/73245.jpg", year: 1999, eps: 1000, score: 8.7, genre: ["Action", "Adventure", "Comedy"], synopsis: "Monkey D. Luffy mencari harta karun One Piece untuk menjadi Raja Bajak Laut.", url: "https://otakudesu.blog/anime/one-piece/" },
+    { id: 6, title: "Chainsaw Man", poster: "https://cdn.myanimelist.net/images/anime/1806/126216.jpg", year: 2022, eps: 12, score: 8.5, genre: ["Action", "Horror", "Supernatural"], synopsis: "Denji menjadi Chainsaw Man setelah digabung dengan iblis gergaji. Ia memburu iblis untuk membayar utang.", url: "https://otakudesu.blog/anime/chainsaw-man/" },
+    { id: 7, title: "Spy x Family", poster: "https://cdn.myanimelist.net/images/anime/1441/122795.jpg", year: 2022, eps: 25, score: 8.5, genre: ["Action", "Comedy", "Slice of Life"], synopsis: "Seorang mata-mata, assassin, dan anak telepati berpura-pura menjadi keluarga untuk menjalankan misi.", url: "https://otakudesu.blog/anime/spy-x-family/" },
+    { id: 8, title: "My Hero Academia", poster: "https://cdn.myanimelist.net/images/anime/10/78745.jpg", year: 2016, eps: 13, score: 8.0, genre: ["Action", "School"], synopsis: "Izuku Midoriya, anak tanpa quirk, mewarisi kekuatan All Might dan bercita-cita menjadi pahlawan.", url: "https://otakudesu.blog/anime/boku-no-hero-academia/" },
+    { id: 9, title: "Fullmetal Alchemist: Brotherhood", poster: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg", year: 2009, eps: 64, score: 9.1, genre: ["Action", "Adventure", "Drama"], synopsis: "Dua bersaudara alchemist mencari Philosopher's Stone untuk mengembalikan tubuh mereka.", url: "https://otakudesu.blog/anime/fullmetal-alchemist-brotherhood/" },
+    { id: 10, title: "Steins;Gate", poster: "https://cdn.myanimelist.net/images/anime/1935/127974.jpg", year: 2011, eps: 24, score: 9.0, genre: ["Sci-Fi", "Thriller"], synopsis: "Okabe Rintaro menemukan cara mengirim pesan ke masa lalu, memicu konspirasi berbahaya.", url: "https://otakudesu.blog/anime/steins-gate/" },
+    { id: 11, title: "Death Note", poster: "https://cdn.myanimelist.net/images/anime/9/9453.jpg", year: 2006, eps: 37, score: 8.6, genre: ["Mystery", "Psychological", "Thriller"], synopsis: "Light Yagami menemukan Death Note yang bisa membunuh siapa pun yang namanya tertulis.", url: "https://otakudesu.blog/anime/death-note/" },
+    { id: 12, title: "Tokyo Revengers", poster: "https://cdn.myanimelist.net/images/anime/1839/112302.jpg", year: 2021, eps: 24, score: 7.9, genre: ["Action", "Drama", "Time Travel"], synopsis: "Takemichi kembali ke masa SMA untuk menyelamatkan mantan pacarnya dari geng Tokyo Manji.", url: "https://otakudesu.blog/anime/tokyo-revengers/" },
+    { id: 13, title: "Blue Lock", poster: "https://cdn.myanimelist.net/images/anime/1253/125680.jpg", year: 2022, eps: 24, score: 8.2, genre: ["Sports"], synopsis: "300 striker muda bersaing di Blue Lock untuk menjadi penyerang terbaik Jepang.", url: "https://otakudesu.blog/anime/blue-lock/" },
+    { id: 14, title: "Oshi no Ko", poster: "https://cdn.myanimelist.net/images/anime/1812/134736.jpg", year: 2023, eps: 11, score: 8.6, genre: ["Drama", "Supernatural"], synopsis: "Dokter dan pasiennya terlahir kembali sebagai anak kembar dari idol terkenal.", url: "https://otakudesu.blog/anime/oshi-no-ko/" },
+    { id: 15, title: "Frieren: Beyond Journey's End", poster: "https://cdn.myanimelist.net/images/anime/1015/138006.jpg", year: 2023, eps: 28, score: 9.3, genre: ["Adventure", "Drama", "Fantasy"], synopsis: "Elf penyihir Frieren merenungkan arti hidup setelah kematian teman-temannya.", url: "https://otakudesu.blog/anime/sousou-no-frieren/" },
+    { id: 16, title: "Vinland Saga", poster: "https://cdn.myanimelist.net/images/anime/1500/103005.jpg", year: 2019, eps: 24, score: 8.7, genre: ["Action", "Adventure", "Drama"], synopsis: "Thorfinn balas dendam atas kematian ayahnya di era Viking.", url: "https://otakudesu.blog/anime/vinland-saga/" },
+    { id: 17, title: "Mushoku Tensei", poster: "https://cdn.myanimelist.net/images/anime/1530/117776.jpg", year: 2021, eps: 23, score: 8.4, genre: ["Adventure", "Fantasy", "Isekai"], synopsis: "Pria gagal terlahir kembali di dunia sihir dan bertekad hidup tanpa penyesalan.", url: "https://otakudesu.blog/anime/mushoku-tensei/" },
+    { id: 18, title: "Re:Zero", poster: "https://cdn.myanimelist.net/images/anime/1522/128039.jpg", year: 2016, eps: 25, score: 8.3, genre: ["Drama", "Fantasy", "Isekai"], synopsis: "Subaru dipindahkan ke dunia lain dan mendapat kemampuan mengulang waktu saat mati.", url: "https://otakudesu.blog/anime/rezero-kara-hajimeru-isekai-seikatsu/" }
   ];
 
   // ============ RENDER ============
@@ -433,8 +433,7 @@
     list.forEach(anime => {
       const card = document.createElement('a');
       card.className = 'anime-card';
-      card.href = anime.url || '#';
-      card.target = '_blank';
+      card.href = `detail.html?id=${anime.id}`;
       card.innerHTML = `
         <img class="poster" src="${anime.poster}" alt="${anime.title}" loading="lazy" />
         <div class="info">
